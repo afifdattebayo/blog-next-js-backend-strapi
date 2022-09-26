@@ -27,7 +27,7 @@ function Tabs({ categories }: IPropTypes) {
                                 ? "border-primary text-primary"
                                 : "border-white text-gray-400"
                                 }`}>
-                                <Link href={`/${category.attributes.Slug}`}>
+                                <Link href={`/category/${category.attributes.Slug}`}>
                                     {category.attributes.Title}
                                 </Link>
                             </li>

@@ -2,16 +2,24 @@ import type { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
 import Tabs from '../components/Tabs'
 import { AxiosResponse } from "axios"
-import { fetchCategories } from "../http"
-import { ICollectionResponse, ICategory } from "../types"
+import { fetchArticles, fetchCategories } from "../http"
+import { ICollectionResponse, ICategory, IArticle, IPagination } from "../types"
+import qs from "qs"
+import ArticleList from '../components/ArticleList'
 
 interface IPropTypes {
   categories: {
     items: ICategory[];
-  }
+  };
+
+  articles: {
+    items: IArticle[];
+    pagination: IPagination;
+  };
 }
 
-const Home: NextPage<IPropTypes> = ({ categories }) => {
+const Home: NextPage<IPropTypes> = ({ categories, articles }) => {
+
 
   return (
     <div>
@@ -21,25 +29,36 @@ const Home: NextPage<IPropTypes> = ({ categories }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Tabs categories={categories.items} />
-      <main >
-        <h1 className='text-primary' >
-          Welcome to Blog Next.js!
-        </h1>
-      </main>
+      <ArticleList articles={articles.items} />
 
     </div>
   )
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
+  // article
+  const options = {
+    populate: ['author.avatar'],
+    sort: ['id:desc']
+  }
+
+  const queryString = qs.stringify(options)
+
+  const { data: articles }: AxiosResponse<ICollectionResponse<IArticle[]>> =
+    await fetchArticles(queryString);
 
   // categories
-  const { data: categories }: AxiosResponse<ICollectionResponse<ICategory[]>> = await fetchCategories();
+  const { data: categories }: AxiosResponse<ICollectionResponse<ICategory[]>> =
+    await fetchCategories();
   return {
     props: {
       categories: {
         items: categories.data
-      }
+      },
+      articles: {
+        items: articles.data,
+        pagination: articles.meta.pagination,
+      },
     }
   }
 }
