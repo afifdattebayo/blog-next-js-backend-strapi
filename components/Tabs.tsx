@@ -9,7 +9,7 @@ interface IPropTypes {
 function Tabs({ categories }: IPropTypes) {
     const router = useRouter()
     const isActiveLink = (category: ICategory) => {
-        return category.attributes.Slug === router.query.catergory;
+        return category.attributes.Slug === router.query.category;
     }
     return (
         <div className='my-8 flex items-center justify-between border-b-2 border-gray-100'>
@@ -23,7 +23,8 @@ function Tabs({ categories }: IPropTypes) {
                 {
                     categories.map((category) => {
                         return (
-                            <li key={category.id} className={`mr-6 pb-6 border-b-4 rounded-sm ${isActiveLink(category)
+                            <li key={category.id} className={`mr-6 pb-6 border-b-4 rounded-sm 
+                             ${isActiveLink(category)
                                 ? "border-primary text-primary"
                                 : "border-white text-gray-400"
                                 }`}>
