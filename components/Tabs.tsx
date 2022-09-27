@@ -5,8 +5,9 @@ import { useRouter } from "next/router"
 
 interface IPropTypes {
     categories: ICategory[]
+    handleSearch: (query: string) => void
 }
-function Tabs({ categories }: IPropTypes) {
+function Tabs({ categories, handleSearch }: IPropTypes) {
     const router = useRouter()
     const isActiveLink = (category: ICategory) => {
         return category.attributes.Slug === router.query.category;
@@ -25,8 +26,8 @@ function Tabs({ categories }: IPropTypes) {
                         return (
                             <li key={category.id} className={`mr-6 pb-6 border-b-4 rounded-sm 
                              ${isActiveLink(category)
-                                ? "border-primary text-primary"
-                                : "border-white text-gray-400"
+                                    ? "border-primary text-primary"
+                                    : "border-white text-gray-400"
                                 }`}>
                                 <Link href={`/category/${category.attributes.Slug}`}>
                                     {category.attributes.Title}
@@ -48,6 +49,7 @@ function Tabs({ categories }: IPropTypes) {
                     type="text"
                     placeholder="Search"
                     className="outline-none px-2 py-1 ml-1"
+                    onChange={(e) => handleSearch(e.target.value)}
                 />
             </div>
         </div>

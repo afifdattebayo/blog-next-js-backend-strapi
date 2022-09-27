@@ -9,7 +9,7 @@ interface IPropType {
 }
 
 function BlogCard({ article }: IPropType) {
-    console.info(article);
+    
     return (
         <div>
             <Link href={`/article/${article.attributes.Slug}`}>
