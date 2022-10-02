@@ -1,4 +1,4 @@
-import { Interface } from "readline";
+import {MDXRemoteSerializeResult} from "next-mdx-remote"
 
 export interface ICattegoryAttribute {
     Title: string;
@@ -61,7 +61,7 @@ export interface IAuthor {
 }
 export interface IArticlesAttribute {
     Title: string;
-    body: string;
+    body: string | MDXRemoteSerializeResult;
     Slug: string;
     Image: IImageData;
     createdAt: string;
@@ -86,3 +86,4 @@ export interface IQueryOptions {
     }
 
 }
+

@@ -32,6 +32,7 @@ function Pagination({ page, pageCount, redirectUrl = "/" }: PropType) {
             page: page + direction
         })
 
+        // router.push(`${redirectUrl}?${quesyString}`)
         router.push(`${redirectUrl}?${quesyString}`)
     }
     return (
